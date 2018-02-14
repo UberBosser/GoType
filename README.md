@@ -1,2 +1,3 @@
 # GoType
 A typing game with go as the back end.
+Code is probably horrible, still learning golang...
