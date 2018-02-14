@@ -7,6 +7,11 @@ var currentWord = document.getElementById("currentWord");
 // Text to type is located here.
 var text = document.getElementById("typingText");
 
+// WPM counter.
+var wpm = document.getElementById("wpm");
+
+var typedChars = 0;
+
 var inputBox = document.getElementById("inputBox");
 
 
@@ -24,15 +29,20 @@ function getWord() {
 
 getWord();
 text.innerHTML = text.innerHTML.replace(currentWord.innerHTML, "");
+var startTime = new Date();
+
 
 function inputKey() {
+    wpm.innerHTML = Math.floor((typedChars/5)/((new Date() - startTime)/60000));
     if (inputBox.value == currentWord.innerHTML) {
         completedText.innerHTML += currentWord.innerHTML;
         getWord();
         text.innerHTML = text.innerHTML.replace(currentWord.innerHTML, "");
         inputBox.value = "";
+        typedChars++;
     } else if (currentWord.innerHTML.startsWith(inputBox.value) && inputBox.value != "") {
         inputBox.style.backgroundColor = "#ccffcc";
+        typedChars++;
     } else if (inputBox.value != "") {
         inputBox.style.backgroundColor = "#ffb2b2";
     }
