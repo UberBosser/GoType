@@ -1,9 +1,14 @@
 // Typing game logic...
 
-var text = document.getElementById("typingText").innerHTML;
+var text = document.getElementById("typingText");
+
+// Text that was typed will be sent here.
+var completedText = document.getElementById("typedText");
+
 var inputBox = document.getElementById("inputBox");
+
 // Split text into word array.
-var textArrayWithoutSpaces = text.split(" ");
+var textArrayWithoutSpaces = text.textContent.split(" ");
 var textArray = new Array();
 
 // Add whitespaces.
@@ -12,7 +17,6 @@ for (var i = 0; i < textArrayWithoutSpaces.length - 1; i++) {
     word += " ";
     textArray.push(word);
 }
-console.log(textArray);
 
 var i = 0;
 var finished = false;
@@ -26,9 +30,11 @@ function inputKeyUp() {
             inputBox.style.backgroundColor = "#ccffcc";
             if (textArray[i] == inputBox.value) {
                 inputBox.value = "";
+                completedText.innerHTML += textArray[i];
+                text.textContent = text.textContent.replace(textArray[i], "");
                 i++;
                 // Check if we finished typing.
-                if (i >= textArray.length) {
+                if (i > textArray.length) {
                     // End screen.
                     finished = true;
                 }

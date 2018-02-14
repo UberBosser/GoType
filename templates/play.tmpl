@@ -6,7 +6,7 @@
         <script src="/static/playScript.js" defer></script>
     </head>
     <body>
-        <p id="typingText">{{.Text}}</p>
+        <p><span id="typedText" style="color:green"></span><span id="currentWord"></span><span id="typingText">{{.Text}}</span></p>
         <input type="text" name="typingBox" id="inputBox" onkeyup="inputKeyUp()"></input>
     </body>
 </html>
