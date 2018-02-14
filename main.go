@@ -4,7 +4,11 @@ import (
     "log"
     "net/http"
     "html/template"
+    "io/ioutil"
+    "os"
 )
+
+var text string
 
 type webError struct {
     ErrorName    string
@@ -26,13 +30,17 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 func playHandler(w http.ResponseWriter, r *http.Request) {
     t := template.Must(template.ParseFiles("./templates/play.tmpl"))
-    p := playText{Text: "Lorem ipsum dolor sit amet"}
+    p := playText{Text: text}
     t.Execute(w, p)
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {}
 
 func main() {
+    file, _ := os.Open("texts.txt")
+    t, _ := ioutil.ReadAll(file)
+    text = string(t)
+    file.Close()
     http.HandleFunc("/", homeHandler)
     http.HandleFunc("/play", playHandler)
     http.HandleFunc("/login", loginHandler)

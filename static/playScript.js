@@ -1,47 +1,40 @@
 // Typing game logic...
 
-var text = document.getElementById("typingText");
-
 // Text that was typed will be sent here.
 var completedText = document.getElementById("typedText");
+// Text that is currently getting typed will be sent here.
+var currentWord = document.getElementById("currentWord");
+// Text to type is located here.
+var text = document.getElementById("typingText");
 
 var inputBox = document.getElementById("inputBox");
 
-// Split text into word array.
-var textArrayWithoutSpaces = text.textContent.split(" ");
-var textArray = new Array();
 
-// Add whitespaces.
-for (var i = 0; i < textArrayWithoutSpaces.length - 1; i++) {
-    var word = textArrayWithoutSpaces[i];
-    word += " ";
-    textArray.push(word);
-}
-
-var i = 0;
-var finished = false;
-
-
-function inputKeyUp() {
-    // When a key is released check if the start of the current word matches the input.
-    // Then check if the word matches the input, if yes then clear the input and move to the next word.
-    if (!finished) {
-        if (textArray[i].startsWith(inputBox.value)) {
-            inputBox.style.backgroundColor = "#ccffcc";
-            if (textArray[i] == inputBox.value) {
-                inputBox.value = "";
-                completedText.innerHTML += textArray[i];
-                text.textContent = text.textContent.replace(textArray[i], "");
-                i++;
-                // Check if we finished typing.
-                if (i > textArray.length) {
-                    // End screen.
-                    finished = true;
-                }
-            }     
-        } else if (inputBox.value != ""){
-            inputBox.style.backgroundColor = "#ffb2b2";
+function getWord() {
+    var word = "";
+    for (var i = 0; i < text.innerHTML.length; i++) {
+        word += text.innerHTML.charAt(i);
+        if (text.innerHTML.charAt(i) == " ") {
+            currentWord.innerHTML = word;
+            return;
         }
     }
-
+    currentWord.innerHTML = word;
 }
+
+getWord();
+text.innerHTML = text.innerHTML.replace(currentWord.innerHTML, "");
+
+function inputKey() {
+    if (inputBox.value == currentWord.innerHTML) {
+        completedText.innerHTML += currentWord.innerHTML;
+        getWord();
+        text.innerHTML = text.innerHTML.replace(currentWord.innerHTML, "");
+        inputBox.value = "";
+    } else if (currentWord.innerHTML.startsWith(inputBox.value) && inputBox.value != "") {
+        inputBox.style.backgroundColor = "#ccffcc";
+    } else if (inputBox.value != "") {
+        inputBox.style.backgroundColor = "#ffb2b2";
+    }
+}
+

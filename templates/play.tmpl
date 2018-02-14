@@ -6,7 +6,11 @@
         <script src="/static/playScript.js" defer></script>
     </head>
     <body>
-        <p><span id="typedText" style="color:green"></span><span id="currentWord"></span><span id="typingText">{{.Text}}</span></p>
-        <input type="text" name="typingBox" id="inputBox" onkeyup="inputKeyUp()"></input>
+        <p>
+            <span id="typedText" style="color:green"></span>
+            <span id="currentWord" style="color:green;font-weight:bold"></span>
+            <span id="typingText">{{.Text}}</span>
+        </p>
+        <input type="text" name="typingBox" id="inputBox" oninput="inputKey()"></input>
     </body>
 </html>
