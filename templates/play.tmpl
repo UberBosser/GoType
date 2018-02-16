@@ -3,16 +3,22 @@
     <head>
         <title>Play</title>
         <link href="/static/style.css" type="text/css" rel="stylesheet">
-        <script src="/static/playScript.js" defer></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="/static/playScript.js"></script>
     </head>
     <body>
         <h1><a href="/">GoType</a></h1>
-        <h2 id="wpm">0</h2>
+        <div id="progressBarHolder">
+            <div id="progressBar"></div>
+        </div>
         <p>
             <span id="typedText" style="color:green"></span>
             <span id="currentWord" style="color:green;font-weight:bold"></span>
             <span id="typingText">{{.Text}}</span>
         </p>
-        <input type="text" name="typingBox" id="inputBox" oninput="inputKey()"></input>
+        <input type="text" name="typingBox" id="inputBox" autofocus="autofocus"></input>
+        <form id="form" action="/play" method="post">
+            <input type="hidden" name="wpm" id="wpmInput"></input>
+        </form>
     </body>
 </html>

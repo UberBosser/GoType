@@ -29,18 +29,25 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func playHandler(w http.ResponseWriter, r *http.Request) {
-    t := template.Must(template.ParseFiles("./templates/play.tmpl"))
-    p := playText{Text: text}
-    t.Execute(w, p)
+    if r.Method == "GET" {
+        t := template.Must(template.ParseFiles("./templates/play.tmpl"))
+        p := playText{Text: text}
+        t.Execute(w, p)
+    } else {
+        r.ParseForm()
+        log.Println(r.Form["wpm"])
+    }
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {}
+
 
 func main() {
     file, _ := os.Open("texts.txt")
     t, _ := ioutil.ReadAll(file)
     text = string(t)
     file.Close()
+
     http.HandleFunc("/", homeHandler)
     http.HandleFunc("/play", playHandler)
     http.HandleFunc("/login", loginHandler)
