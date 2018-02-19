@@ -8,8 +8,18 @@
     </head>
     <body>
         <h1><a href="/">GoType</a></h1>
+        <div id="userData" data-uuid="{{.Uuid}}" data-usernumber={{.UserNumber}}></div>
         <div id="progressBarHolder">
-            <div id="progressBar"></div>
+            <div id="userBar0" class="progressBar"></div>
+        </div>
+        <div id="progressBarHolder">
+            <div id="userBar1" class="progressBar"></div>
+        </div>
+        <div id="progressBarHolder">
+            <div id="userBar2" class="progressBar"></div>
+        </div>
+        <div id="progressBarHolder">
+            <div id="userBar3" class="progressBar"></div>
         </div>
         <p>
             <span id="typedText" style="color:green"></span>
@@ -17,8 +27,5 @@
             <span id="typingText">{{.Text}}</span>
         </p>
         <input type="text" name="typingBox" id="inputBox" autofocus="autofocus"></input>
-        <form id="form" action="/play" method="post">
-            <input type="hidden" name="wpm" id="wpmInput"></input>
-        </form>
     </body>
 </html>

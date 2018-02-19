@@ -51,13 +51,30 @@ a:hover {
 #progressBarHolder {
     width: 100%;
     background-color: #ddd;
+    margin-bottom: 0.5%;
 }
 
-#progressBar {
+.progressBar {
     width: 0%;
-    height: 30px;
-    background-color: green;
+    height: 10px;
     text-align: center;
-    line-height: 30px;
-    color: white;
+    line-height: 3px;
+    color: black;
 }
+
+#userBar0 {
+    background-color: #0057E7;
+}
+
+#userBar1 {
+    background-color: #D62D20;
+}
+
+#userBar2 {
+    background-color: #FFA700;
+}
+
+#userBar3 {
+    background-color: #008744;
+}
+
