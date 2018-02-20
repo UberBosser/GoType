@@ -17,7 +17,7 @@ var text string
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 func idGenerator() string {
-    b := make([]byte, 5)
+    b := make([]byte, 8)
     for i := range b {
         b[i] = letterBytes[rand.Intn(len(letterBytes))]
     }
@@ -60,18 +60,23 @@ type gameLobby struct {
     Uuids    []string
 }
 
+type openLobby struct {
+    lobby *gameLobby
+}
 
-var lobby *gameLobby
+var openL openLobby
 
 func (g *gameLobby) create() {
+    g.GameID = idGenerator()
+    http.HandleFunc("/data/" + g.GameID, g.dataHandler)
+    http.HandleFunc("/play/" + g.GameID, g.playHandler)
+    openL.lobby = g
     t, _ := ioutil.ReadFile("texts.txt")
     text = string(t)
     g.GameData.Text = text
     g.GameData.TextSize = len(g.GameData.Text)
-    log.Println(g.GameData.TextSize)
     g.GameData.CountdownTime = 20
     g.GameData.GameTime = 120
-    g.GameID = idGenerator()
     log.Println(g.GameID + " : Lobby created.")
     g.save()
     go g.update()
@@ -84,7 +89,7 @@ func (g *gameLobby) update() {
             os.Remove("./data/" + g.GameID + ".json")
             return 
         } else if (g.GameData.CountdownTime == 1) {
-            lobby = &gameLobby{}
+            lobby := &gameLobby{}
             lobby.create()
             g.GameData.CountdownTime -= 1
             g.save()
@@ -115,9 +120,13 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
     http.ServeFile(w, r, "./templates/index.html")
 }
 
+func (o *openLobby) playRedirect(w http.ResponseWriter, r *http.Request) {
+    http.Redirect(w, r, "./play/" + o.lobby.GameID, http.StatusFound)  
+}
+
 func (g *gameLobby) playHandler(w http.ResponseWriter, r *http.Request) {
     if r.Method == "GET" {
-        if (g.GameData.ConnectedUsers < 4) {
+        if (g.GameData.ConnectedUsers < 4 && g.GameData.CountdownTime != 0) {
             u, _ := uuid.NewRandom()
             g.GameData.Users = append(g.GameData.Users, userData{UserNumber: g.GameData.ConnectedUsers, Name: "Guest"})
             g.Uuids = append(g.Uuids, u.String())
@@ -127,12 +136,8 @@ func (g *gameLobby) playHandler(w http.ResponseWriter, r *http.Request) {
             t := template.Must(template.ParseFiles("./templates/play.tmpl"))
             t.Execute(w, te)
         }
-    } else {
-        r.ParseForm()
-        log.Println(r.Form["wpm"])
     }
 }
-
 
 func (g *gameLobby) dataHandler(w http.ResponseWriter, r *http.Request) {
     if r.Method == "GET" {
@@ -154,12 +159,11 @@ func (g *gameLobby) dataHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
     rand.Seed(time.Now().UnixNano())
-    lobby = &gameLobby{}
+    lobby := &gameLobby{}
     lobby.create()
 
     http.HandleFunc("/", homeHandler)
-    http.HandleFunc("/play", lobby.playHandler)
-    http.HandleFunc("/data", lobby.dataHandler)
+    http.HandleFunc("/play", openL.playRedirect)
     
     fs := http.FileServer(http.Dir("static"))
     http.Handle("/static/", http.StripPrefix("/static/", fs))

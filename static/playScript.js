@@ -30,6 +30,9 @@ $(document).ready(function() {
     // Set starting word.
     currentWord.text(getWord(typingText));
     typingText.text(typingText.text().replace(currentWord.text(), ""));
+    // Get GameID and create AJAX URL.
+    var gameId = userData.attr("data-gameid");
+    var dataUrl = "/data/" + gameId;
     // To calculate wpm. 
     var startTime = new Date;
     // On input logic...
@@ -38,7 +41,7 @@ $(document).ready(function() {
         var percentage = (typedText.text().length/typingTextSize) * 100;
         // Send data.
         $.ajax({
-            url: "/data",
+            url: dataUrl,
             type: "PUT",
             data: JSON.stringify({
                 "Uuid": userData.attr("data-uuid"), 
@@ -51,14 +54,23 @@ $(document).ready(function() {
         // Get data & update Bars. 
         var data;
         $.ajax({
-            url: "/data",
+            url: dataUrl,
             dataType: "json",
             data: data,
             success: function(data) {
-                $("#countdownTime").text("Time: " + data.CountdownTime);
                 if (data.CountdownTime == 0) {
-                    $("#inputBox").prop("disabled", false);
-                    $("#inputBox").focus();
+                    if ($("#inputBox").prop("disabled") == true) {
+                        $("#inputBox").prop("disabled", false);
+                        $("#inputBox").focus();
+                    } else {
+                        if (data.GameTime == 0) {
+                              
+                        } else {
+                            $("#countdownTime").text("Time 'til finish: " + data.GameTime);
+                        }
+                    }
+                } else {  
+                    $("#countdownTime").text("Starting in " + data.CountdownTime + " seconds...");
                 }
                 for (var i = 0; i < data.Users.length; i++) {
                     $("#userBar" + i).css("width", data.Users[i].Percentage + "%");
