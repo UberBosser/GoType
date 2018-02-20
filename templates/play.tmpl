@@ -8,7 +8,8 @@
     </head>
     <body>
         <h1><a href="/">GoType</a></h1>
-        <div id="userData" data-uuid="{{.Uuid}}" data-usernumber={{.UserNumber}}></div>
+        <div id="userData" data-gameid="{{.GameID}}" data-uuid="{{.Uuid}}" data-usernumber={{.UserNumber}}></div>
+        <p id="countdownTime"></p>
         <div id="progressBarHolder">
             <div id="userBar0" class="progressBar"></div>
         </div>
@@ -26,6 +27,6 @@
             <span id="currentWord" style="color:green;font-weight:bold"></span>
             <span id="typingText">{{.Text}}</span>
         </p>
-        <input type="text" name="typingBox" id="inputBox" autofocus="autofocus"></input>
+        <input type="text" name="typingBox" id="inputBox" disabled></input>
     </body>
 </html>

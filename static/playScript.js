@@ -36,7 +36,6 @@ $(document).ready(function() {
     setInterval(function() {
         // Percentage & wpm bar updating.
         var percentage = (typedText.text().length/typingTextSize) * 100;
-        var wpm = Math.floor((typedText.text().length/5)/((new Date() - startTime)/60000));
         // Send data.
         $.ajax({
             url: "/data",
@@ -44,26 +43,31 @@ $(document).ready(function() {
             data: JSON.stringify({
                 "Uuid": userData.attr("data-uuid"), 
                 "UserNumber": parseInt(userData.attr("data-usernumber")), 
-                "Wpm": wpm, 
+                "Characters": typedText.text().length,
                 "Percentage": Math.floor(percentage)
             }),
             contentType: "application/json" ,
         });
+        // Get data & update Bars. 
         var data;
-        // Get data & update Bars.
         $.ajax({
             url: "/data",
             dataType: "json",
             data: data,
             success: function(data) {
+                $("#countdownTime").text("Time: " + data.CountdownTime);
+                if (data.CountdownTime == 0) {
+                    $("#inputBox").prop("disabled", false);
+                    $("#inputBox").focus();
+                }
                 for (var i = 0; i < data.Users.length; i++) {
-                    $("#userBar" + i).css("width", data.Users[i].Percentage + "%")
-                    $("#userBar" + i).text("wpm: " + data.Users[i].Wpm)
+                    $("#userBar" + i).css("width", data.Users[i].Percentage + "%");
+                    $("#userBar" + i).text("wpm: " + Math.floor(data.Users[i].Wpm));
                 }
             }
         });
     }, 1000);
-    $("#inputBox").on('input', function() { 
+    $("#inputBox").on('input', function() {
         if ($(this).val() == currentWord.text()) {
             typedText.text(typedText.text() + currentWord.text());
             currentWord.text(getWord(typingText));
