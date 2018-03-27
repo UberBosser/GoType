@@ -2,6 +2,12 @@
 Gin + Infernojs = 💙
 
 [Gin](https://github.com/gin-gonic/gin) and [Infernojs](https://github.com/infernojs/inferno) create a blazing fast server/client.
+## Installation
+```
+$ git clone https://github.com/UberBosser/GoTemplate.git [<dir>]
+$ cd [<dir>]
+$ yarn init && yarn
+```
 
 ## Project tree
 ```
