@@ -5,44 +5,11 @@ Gin + Infernojs = 💙
 ## Installation
 ```
 $ git clone https://github.com/UberBosser/GoTemplate.git [<dir>]
+$ go get github.com/gin-gonic/gin
 $ cd [<dir>]
 $ yarn init && yarn
 ```
-
-## Project tree
-```
-GoTemplate
-├── main.go
-├── package.json
-├── README.md
-├── src
-│   ├── components
-│   │   └── navbar.jsx
-│   ├── containers
-│   │   ├── 404.jsx
-│   │   └── index.jsx
-│   ├── css
-│   │   └── global.sass
-│   └── images
-├── static
-│   ├── css
-│   │   ├── 404.bundle.css
-│   │   ├── bootstrap.min.css
-│   │   └── index.bundle.css
-│   ├── images
-│   │   └── favicon.ico
-│   └── js
-│       ├── 404.bundle.js
-│       └── index.bundle.js
-├── templates
-│   ├── includes
-│   │   └── headers.tmpl
-│   └── layouts
-│       ├── 404.tmpl
-│       └── index.tmpl
-├── webpack.config.js
-└── yarn.lock
-```
+## Template structure
 * `main.go` main Gin server.
 * `src` .jsx + .sass.
 * `src/components` contain components of the ui.
