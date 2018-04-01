@@ -1,5 +1,7 @@
 import { render, Component } from "inferno";
-import css from "../css/global.sass";
+
+import "../css/bootstrap.min.css";
+import "../css/global.scss";
 
 import Navbar from "../components/navbar.jsx";
 

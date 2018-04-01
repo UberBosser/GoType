@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
     entry: {
         index: "./src/containers/index.jsx",
+        play: "./src/containers/play.jsx",
         404: "./src/containers/404.jsx"
     },
 
@@ -21,11 +22,14 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(css|sass)$/,
+                test: /\.(css|scss|sass)$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
-                        loader: "css-loader" 
+                        loader: "css-loader",
+                        options: {
+                            minimize: true
+                        }
                     },
                     {
                         loader: "sass-loader" 

@@ -1,7 +1,7 @@
 {
-  "name": "GoTemplate",
+  "name": "GoType",
   "version": "1.0.0",
-  "description": "A Golang + Inferno template.",
+  "description": "A typing game.",
   "main": "index.js",
   "author": "<uberbosser@gmail.com>",
   "license": "MIT",
@@ -24,5 +24,6 @@
     "node-sass": "^4.8.3",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3"
-  }
+  },
+  "repository": "https://github.com/UberBosser/GoTemplate.git"
 }
