@@ -1,19 +1,4 @@
-# GoTemplate
-Gin + Infernojs = 💙
-
-[Gin](https://github.com/gin-gonic/gin) and [Infernojs](https://github.com/infernojs/inferno) create a blazing fast server/client.
-## Installation
-```
-$ git clone https://github.com/UberBosser/GoTemplate.git [<dir>]
-$ go get github.com/gin-gonic/gin
-$ cd [<dir>]
-$ yarn init && yarn
-```
-## Template structure
-* `main.go` main Gin server.
-* `src` .jsx + .sass.
-* `src/components` contain components of the ui.
-* `src/containers` different web pages.
-* `static` webpacked .css and .js.
-* `templates/includes` Golang template "defines".
-* `templates/layouts` Golang container templates.
+# GoType
+A modern typeracer clone.  
+Built on [GoTemplate](https://github.com/UberBosser/GoTemplate)  
+Uses [Gin](https://github.com/gin-gonic/gin) and [Gorilla websockets](https://github.com/gorilla/websocket) as the back end and [Infernojs](https://github.com/infernojs/inferno) for a blazing fast front end.
