@@ -7,7 +7,7 @@ class TypingBars extends Component {
     render() {
         return(
             <div>
-                <h3>{this.props.timeText}{this.props.time}</h3>
+                <h3>{this.props.timeText + (this.props.users.length > 1 ? this.props.time : "")}</h3>
                 {this.props.users.map(user => 
                     <TypingBar {...user} />
                 )}

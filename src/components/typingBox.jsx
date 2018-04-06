@@ -15,9 +15,13 @@ class TypingBox extends Component {
                     timeText={this.props.timeText}
                 />
                 <hr />
-                <TypingText text={this.props.text}/>
-                <hr />
-                <TypingInput />
+                <TypingInput 
+                    text={this.props.text}
+                    textArray={this.props.textArray}
+                    started={this.props.started}
+                    finished={this.props.finished}
+                    updateUser={this.props.updateUser}
+                />
             </div>
         ) 
     }

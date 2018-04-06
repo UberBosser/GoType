@@ -17,8 +17,7 @@ class Page extends Component {
         this.state = {
             id: "",
             users: [],
-            text: "",
-            timeText: "Waiting for players",
+            timeText: "Waiting for players...",
             cdtime: 30,
             connected: false,
             updateUser: this.updateUser.bind(this)
@@ -48,17 +47,19 @@ class Page extends Component {
         this.setState({users});
     }
     updateUsers(game) {
-        if (game.started) {
+        if (game.started == true) {
             this.setState({timeText: "Time \'till finish: "});
         }
         this.setState({
             users: game.users,
-            cdtime: game.cdtime
+            cdtime: game.cdtime,
+            started: game.started
         });
     }
     initUser(init) {
         this.setState({
             text: init.text,
+            textArray: init.text.split(" "),
             id: init.id
         });
     }

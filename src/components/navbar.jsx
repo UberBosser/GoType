@@ -5,7 +5,7 @@ class Navbar extends Component {
         return (
             <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="/">Brand</a>
+                    <a class="navbar-brand" href="/">GoType</a>
                     <a class="btn btn-light navbar-right" href="/auth" role="button"><span class="material-icons">face</span> Login</a>
                 </div>
             </nav>

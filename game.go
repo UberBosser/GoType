@@ -32,11 +32,11 @@ type Init struct {
 }
 
 type Game struct {
-	Id           string       `json:"-"`
 	Text         string       `json:"-"`
 	Users        []User       `json:"users"`
 	CdTime       int          `json:"cdtime"`
 	Started      bool         `json:"started"`
+	Ended        bool         `json:"ended"`
 	Clients      []*Client    `json:"-"`
 	NewUser      chan User    `json:"-"`
 	UpdateUser   chan User    `json:"-"`
@@ -45,10 +45,10 @@ type Game struct {
 
 func newGame() *Game {
 	return &Game{
-		Id:           "id generation goes here",
 		Text:         "Typing text goes here",
-		CdTime:       30,
+		CdTime:       20,
 		Started:      false,
+		Ended:        false,
 		NewUser:      make(chan User),
 		UpdateUser:   make(chan User),
 		RemoveClient: make(chan *Client),
@@ -87,9 +87,18 @@ func (g *Game) run() {
 				if g.CdTime > 0 {
 					g.CdTime -= 1
 				}
-			} else if g.CdTime == 0 && !g.Started {
+			}
+			if g.CdTime == 0 && g.Started == false {
 				g.Started = true
 				g.CdTime = len(g.Text) * 3
+			} else if g.CdTime == 0 && g.Started == true && g.Ended == false {
+				g.Ended = true
+				g.CdTime = 10
+			} else if g.CdTime == 0 && g.Ended == true {
+				for _, c := range g.Clients {
+					c.conn.Close()
+				}
+				return
 			}
 		}
 	}
